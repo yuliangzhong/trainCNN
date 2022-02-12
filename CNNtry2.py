@@ -1,4 +1,4 @@
-# baseline
+# baseline + 512-2
 from keras.models import Model
 from keras.layers import Dense, Flatten, Conv2D, MaxPooling2D, concatenate, BatchNormalization
 from keras import Input
@@ -36,17 +36,21 @@ angLayer = BatchNormalization()(angLayer)
 out_ang = Dense(16, activation='relu')(angLayer)
 
 Map_input = Input(shape=(25,25,1), name='map_input')
-Layer = Conv2D(16, 3, activation="relu")(Map_input)
-Layer = Conv2D(16, 3, activation="relu")(Layer)
+Layer = Conv2D(16, 5, activation="relu")(Map_input)
+Layer = Conv2D(16, 5, activation="relu")(Layer)
 Layer = MaxPooling2D((2,2))(Layer)
-Layer = Conv2D(8, 3, activation="relu")(Layer)
+Layer = Conv2D(8, 5, activation="relu")(Layer)
 Layer = Flatten()(Layer)
+Layer = Dense(256, activation='relu')(Layer)
+Layer = BatchNormalization()(Layer)
 Layer = Dense(256, activation='relu')(Layer)
 Layer = BatchNormalization()(Layer)
 out_map = Dense(16, activation='relu')(Layer)
 
 concatenated = concatenate([out_ang, out_map])
 Layer2 = Dense(256, activation='relu')(concatenated)
+Layer2 = BatchNormalization()(Layer2)
+Layer2 = Dense(512, activation='relu')(Layer2)
 Layer2 = BatchNormalization()(Layer2)
 out = Dense(2, activation='relu')(Layer2)
 model = Model([Pos_input, Map_input], out)

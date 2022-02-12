@@ -43,19 +43,23 @@ Layer = Conv2D(8, 5, activation="relu")(Layer)
 Layer = Flatten()(Layer)
 Layer = Dense(256, activation='relu')(Layer)
 Layer = BatchNormalization()(Layer)
+Layer = Dense(256, activation='relu')(Layer)
+Layer = BatchNormalization()(Layer)
 out_map = Dense(16, activation='relu')(Layer)
 
 concatenated = concatenate([out_ang, out_map])
 Layer2 = Dense(256, activation='relu')(concatenated)
 Layer2 = BatchNormalization()(Layer2)
+Layer2 = Dense(256, activation='relu')(Layer2)
+Layer2 = BatchNormalization()(Layer2)
 out = Dense(2, activation='relu')(Layer2)
 model = Model([Pos_input, Map_input], out)
 print(model.summary())
-model.compile(loss=weighted_mse, optimizer="adam")
+model.compile(loss='mse', optimizer="adam")
 # plot_model(model, to_file="modelFig/model"+modelName+".png", show_shapes=False, show_dtype=False, show_layer_names=True, rankdir='TB', expand_nested=False)
 
 # # fit and predict
-model.fit([xPostrain, xMaptrain], ytrain, batch_size=16,epochs=300)
+model.fit([xPostrain, xMaptrain], ytrain, batch_size=32,epochs=200)
 xMaptest = xMaptest.reshape(xMaptest.shape[0], 25, -1)
 ypred = model.predict([xPostest,xMaptest]) # [v,g]
 

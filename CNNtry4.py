@@ -1,4 +1,4 @@
-# baseline
+# baseline + more layer after concatenate
 from keras.models import Model
 from keras.layers import Dense, Flatten, Conv2D, MaxPooling2D, concatenate, BatchNormalization
 from keras import Input
@@ -49,6 +49,8 @@ out_map = Dense(16, activation='relu')(Layer)
 
 concatenated = concatenate([out_ang, out_map])
 Layer2 = Dense(256, activation='relu')(concatenated)
+Layer2 = BatchNormalization()(Layer2)
+Layer2 = Dense(256, activation='relu')(Layer2)
 Layer2 = BatchNormalization()(Layer2)
 Layer2 = Dense(256, activation='relu')(Layer2)
 Layer2 = BatchNormalization()(Layer2)
