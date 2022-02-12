@@ -6,7 +6,9 @@ This repo is my CNN learning example.
 
 When planning unknown world, the robot (orange arrow) uniformly samples next poses (green arrows) around, computes the gain of each sample, and then chooses the best one to move to. 
 
-The gain function g(\*, \*) is based on two aspects. One is the voxels the robot can newly explore when it is in the pose of the sample, and the other is the cost of the robot to go. The gain computing is expensive. So the idea is to train a CNN-based model predicting the new voxels and the gain of each sample.
+The gain function g(\*, \*) is based on two aspects. One is the voxels the robot can newly explore when it is in the pose of the sample, and the other is the cost of the robot to go. The gain computing is expensive. 
+
+**So the idea is to train a CNN-based model predicting the new voxels and the gain of each sample.**
 ![](https://github.com/yuliangzhong/trainCNN/blob/main/img/data.png)
 **observed map | sample and its local map | 25\*25 grid map input**
 
@@ -27,11 +29,20 @@ We want to train a network for new-voxel and gain prediction. The model structur
 
 ## Result
 
-For 30000 pieces of test data, the prediction performance and MSE error are shown below:
+For 30000 pieces of test data, the prediction performance and Mean Square Error are shown below.
+- Each blue dot is a pair of (predict data, true data);
+- Red line is "y=x";
+- Closer to the read line, better performance.
 
 ![](https://github.com/yuliangzhong/trainCNN/blob/main/img/result4.png)
 
-To verify the performance, we test the model in the planning simulator. We compare 15 different samples, predicting the new-voxel-to-see and gain of each sample. The results go as following:
+To verify the gain prediction, we tested the CNN model in the planning simulator. 
+- For each case, we compare 15 different samples;
+- We predict the new-voxel-to-see (red pair) and gain (blue pair) of each sample;
+- The first elements of pairs are true, the second are predicted;
+- The uniform planner chooses the best true gain sample (red arrow);
+- The gain prediction based planner chooses the best predicted gain sample (purple arrow).
+### Result: The gain predictor always give right choices
 
 - Test1
 ![](https://github.com/yuliangzhong/trainCNN/blob/main/img/test1.png)
