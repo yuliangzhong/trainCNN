@@ -56,7 +56,7 @@ out = Dense(2, activation='relu')(Layer2)
 model = Model([Pos_input, Map_input], out)
 print(model.summary())
 model.compile(loss='mse', optimizer="adam")
-# plot_model(model, to_file="modelFig/model"+modelName+".png", show_shapes=False, show_dtype=False, show_layer_names=True, rankdir='TB', expand_nested=False)
+plot_model(model, to_file="modelFig/model"+modelName+".png", show_shapes=True, show_dtype=True, show_layer_names=False, rankdir='TB', expand_nested=False)
 
 # # fit and predict
 model.fit([xPostrain, xMaptrain], ytrain, batch_size=16,epochs=300)
