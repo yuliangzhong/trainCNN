@@ -2,6 +2,10 @@
 
 This repo is my CNN learning example.
 
+## [Update]
+
+Torch version uploaded.
+
 ## Introduction
 
 When planning unknown world, the robot (orange arrow) uniformly samples next poses (green arrows) around, computes the gain of each sample, and then chooses the best one to move to. 
